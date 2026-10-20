@@ -6,10 +6,10 @@ test.describe('Actions with if-else statements', () => {
             throw new Error("Передайте число");
         }
         if (age >= 18) {
-            return 'You could vote';
+            return 'Ви можете голосувати';
         }
         else if (age < 18) {
-            return 'You could not vote';
+            return 'Ви ще не можете голосувати';
         }
         else {
             return 'Please provide correct age';
