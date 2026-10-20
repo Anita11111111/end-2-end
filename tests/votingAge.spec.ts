@@ -6,26 +6,26 @@ test.describe('Actions with if-else statements', () => {
             throw new Error("Передайте число");
         }
         if (age >= 18) {
-            return 'Ви можете голосувати';
+            return 'Ви можете голосувати.';
         }
         else if (age < 18) {
-            return 'Ви ще не можете голосувати';
+            return 'Ви ще не можете голосувати.';
         }
         else {
-            return 'Please provide correct age';
+            return 'Будь ласка, введіть правильний вік';
         }
     }
 
-    test("вік 17 повертає 'You could not vote'", () => {
-        expect(getVotingMessage(17)).toBe('You could not vote');
+    test("вік 17 повертає 'Ви ще не можете голосувати.'", () => {
+        expect(getVotingMessage(17)).toBe('Ви ще не можете голосувати.');
 });
 
-test("вік 18 повертає 'You could vote'", () => {
-  expect(getVotingMessage(18)).toBe('You could vote');
+test("вік 18 повертає 'Ви можете голосувати.'", () => {
+  expect(getVotingMessage(18)).toBe('Ви можете голосувати.');
 });
 
-test("вік 19 повертає 'You could vote'", () => {
-  expect(getVotingMessage(19)).toBe('You could vote');
+test("вік 19 повертає 'Ви можете голосувати.'", () => {
+  expect(getVotingMessage(19)).toBe('Ви можете голосувати.');
 });
 
     
