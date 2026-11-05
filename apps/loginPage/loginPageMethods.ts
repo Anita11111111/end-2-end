@@ -7,5 +7,4 @@ export class LoginPageMethods extends LoginPageLocators {
         await this.usernameInputPassword.fill(password)
         await this.loginButton.click()
     }
-
 }

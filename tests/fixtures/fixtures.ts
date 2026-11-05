@@ -3,19 +3,23 @@ import { LoginPageMethods } from '../../apps/loginPage/loginPageMethods';
 import { InventoryPageMethods } from '../../apps/inventoryPage/inventoryPageMethods';
 import { CartPageLocators } from '../../apps/cartPage/cartPageLocators';
 import { CartPageMethods } from '../../apps/cartPage/cartPageMethods';
+import { SideBarMethods } from '../../apps/sideBar/sideBarMethods';
+import { users, User } from '../swagLabWithFixtures/swag-labs.data';
 
 
 type MyFixtures = {
     courseName: string;
     loginPage: LoginPageMethods
+    sideBarPage: SideBarMethods;
     inventoryPage: InventoryPageMethods;
     cartPage: CartPageMethods;
     textFixture: void;
     login: void;
-    users: {standard: {login: string; password: string}};
+    logout: void;
     products: Record<string, unknown>;
     paramsFixture: any;
-    userToLogin: {login: string; password: string}
+    userToLogin: User
+    shouldLogout: boolean
 }
 
 // fixture parametrization
@@ -23,18 +27,24 @@ type MyFixtures = {
 
 const test = base.extend<MyFixtures>({
     paramsFixture: undefined,
-    users: {
-        standard: {
-            login: process.env.SAUCE_STANDARD_USERNAME!,
-            password: process.env.SAUCE_PASSWORD!
-        }
-    },
-    userToLogin: [{ login: process.env.SAUCE_STANDARD_USERNAME!, password: process.env.SAUCE_PASSWORD! }, { option: true }],
-    login: async ({page, loginPage, userToLogin}, use) => {
+    userToLogin: [ users.standard , { option: true }],
+    shouldLogout: [true, { option: true }],
+    login: [async ({page, loginPage, userToLogin}, use) => {
         await page.goto('https://www.saucedemo.com/')
         await loginPage.login(userToLogin.login, userToLogin.password);
         await use();
     },
+     { auto: true },
+],
+
+logout: [async ({sideBarPage, shouldLogout}, use) => {
+    await use();
+    if (shouldLogout) {
+        await sideBarPage.logout()
+    }
+},
+{ auto: true },
+],
 
     // textFixture: async ({}, use) => {
     //     console.log('1. Fixture has started'),
@@ -47,6 +57,12 @@ const test = base.extend<MyFixtures>({
         const loginPage = new LoginPageMethods(page);
 
         await use(loginPage)
+    },
+
+    sideBarPage: async ({page}, use) => {
+        const sideBarPage = new SideBarMethods(page);
+
+        await use(sideBarPage)
     },
 
     inventoryPage: async  ({page}, use) => {

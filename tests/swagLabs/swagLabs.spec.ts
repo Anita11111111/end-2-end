@@ -32,5 +32,5 @@ test.describe('Sauce Labs tests', () => {
     await page.locator('.shopping_cart_link').click()
     await cardPageMethods.removeFromCartByTitle('Sauce Labs Backpack')
   })
-}) 
+})
 
